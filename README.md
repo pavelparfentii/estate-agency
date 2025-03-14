@@ -1,4 +1,4 @@
-## Install dependecies
+## Install dependencies
 composer install
 npm install
 
