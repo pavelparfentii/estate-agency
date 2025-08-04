@@ -52,12 +52,37 @@
                     <label for="content" class="block text-sm font-medium text-gray-700 mb-2">
                         Content *
                     </label>
+
+                    <!-- Toolbar -->
+                    <div class="mb-2 flex flex-wrap gap-2">
+                        <button type="button" onclick="addLink()" class="px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600">
+                            🔗 Add Link
+                        </button>
+                        <button type="button" onclick="addBold()" class="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600">
+                            <strong>B</strong> Bold
+                        </button>
+                        <button type="button" onclick="addItalic()" class="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600">
+                            <em>I</em> Italic
+                        </button>
+                        <button type="button" onclick="addHeading()" class="px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600">
+                            H1 Heading
+                        </button>
+                        <button type="button" onclick="addList()" class="px-3 py-1 bg-purple-500 text-white rounded text-sm hover:bg-purple-600">
+                            📝 List
+                        </button>
+                    </div>
+
+                    <div class="mb-2 text-xs text-gray-600">
+                        💡 <strong>Advise:</strong> Select the text and click the button to format, or enter the text in the dialog box.
+
+                    </div>
+
                     <textarea
                         id="content"
                         name="content"
                         rows="10"
                         class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('content') border-red-500 @enderror"
-                        placeholder="Describe..."
+                        placeholder="Content"
                         required
                     >{{ old('content') }}</textarea>
                     @error('content')
@@ -101,5 +126,120 @@
             {{ session('success') }}
         </div>
     @endif
+
+    <script>
+        function addLink() {
+            const textarea = document.getElementById('content');
+            const selectedText = getSelectedText(textarea);
+
+            if (selectedText) {
+
+                const url = prompt('Enter URL:');
+                if (url) {
+                    const link = `<a href="${url}" target="_blank">${selectedText}</a>`;
+                    replaceSelection(textarea, link);
+                }
+            } else {
+
+                const url = prompt('Enter URL:');
+                const text = prompt('Enter link text:');
+
+                if (url && text) {
+                    const link = `<a href="${url}" target="_blank">${text}</a>`;
+                    insertAtCursor(textarea, link);
+                }
+            }
+        }
+
+        function addBold() {
+            const textarea = document.getElementById('content');
+            const selectedText = getSelectedText(textarea);
+
+            if (selectedText) {
+                const boldText = `<strong>${selectedText}</strong>`;
+                replaceSelection(textarea, boldText);
+            } else {
+                const text = prompt('Enter text to make bold:');
+                if (text) {
+                    const boldText = `<strong>${text}</strong>`;
+                    insertAtCursor(textarea, boldText);
+                }
+            }
+        }
+
+        function addItalic() {
+            const textarea = document.getElementById('content');
+            const selectedText = getSelectedText(textarea);
+
+            if (selectedText) {
+                const italicText = `<em>${selectedText}</em>`;
+                replaceSelection(textarea, italicText);
+            } else {
+                const text = prompt('Enter text to make italic:');
+                if (text) {
+                    const italicText = `<em>${text}</em>`;
+                    insertAtCursor(textarea, italicText);
+                }
+            }
+        }
+
+        function getSelectedText(textarea) {
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            return textarea.value.substring(start, end);
+        }
+
+        function replaceSelection(textarea, newText) {
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+
+            const before = textarea.value.substring(0, start);
+            const after = textarea.value.substring(end);
+
+            textarea.value = before + newText + after;
+            textarea.focus();
+            textarea.setSelectionRange(start + newText.length, start + newText.length);
+        }
+
+        function insertAtCursor(textarea, text) {
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+
+            const before = textarea.value.substring(0, start);
+            const after = textarea.value.substring(end);
+
+            textarea.value = before + text + after;
+            textarea.focus();
+            textarea.setSelectionRange(start + text.length, start + text.length);
+        }
+
+        function addHeading() {
+            const textarea = document.getElementById('content');
+            const selectedText = getSelectedText(textarea);
+
+            if (selectedText) {
+                const heading = `<h1>${selectedText}</h1>`;
+                replaceSelection(textarea, heading);
+            } else {
+                const text = prompt('Enter heading text:');
+                if (text) {
+                    const heading = `<h1>${text}</h1>`;
+                    insertAtCursor(textarea, heading);
+                }
+            }
+        }
+
+        function addList() {
+            const textarea = document.getElementById('content');
+            const items = prompt('Enter list items separated by commas:');
+
+            if (items) {
+                const itemArray = items.split(',').map(item => item.trim());
+                const listItems = itemArray.map(item => `  <li>${item}</li>`).join('\n');
+                const list = `<ul>\n${listItems}\n</ul>`;
+                insertAtCursor(textarea, list);
+            }
+        }
+    </script>
 </body>
 </html>

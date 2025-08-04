@@ -56,8 +56,8 @@
 
                 <!-- Post Content -->
                 <div class="prose prose-lg max-w-none">
-                    <div class="text-gray-700 leading-relaxed whitespace-pre-wrap">
-                        {{ $post->content }}
+                    <div class="text-gray-700 leading-relaxed">
+                        {!! $post->content !!}
                     </div>
                 </div>
 
@@ -67,7 +67,7 @@
                         <div class="flex space-x-4">
                             <a href="{{ route('admin.blog.edit', $post->id) }}"
                                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-                                Редагувати
+                                Edit
                             </a>
                             <form action="{{ route('admin.blog.destroy', $post->id) }}" method="POST" class="inline">
                                 @csrf
