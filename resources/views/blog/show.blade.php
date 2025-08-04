@@ -57,6 +57,48 @@
                 <!-- Post Content -->
                 <div class="prose prose-lg max-w-none">
                     <div class="text-gray-700 leading-relaxed">
+                        <style>
+                            .prose a {
+                                color: #2563eb;
+                                text-decoration: underline;
+                                transition: color 0.2s ease;
+                                position: relative;
+                            }
+                            .prose a:hover {
+                                color: #1d4ed8;
+                                text-decoration: none;
+                            }
+                            .prose a:visited {
+                                color: #7c3aed;
+                            }
+                            .prose a[target="_blank"]::after {
+                                content: " ↗";
+                                font-size: 0.75em;
+                                opacity: 0.7;
+                            }
+                            .prose strong {
+                                font-weight: 600;
+                            }
+                            .prose em {
+                                font-style: italic;
+                            }
+                            .prose h1 {
+                                font-size: 1.875rem;
+                                font-weight: 700;
+                                margin-top: 2rem;
+                                margin-bottom: 1rem;
+                                color: #111827;
+                            }
+                            .prose ul {
+                                list-style-type: disc;
+                                padding-left: 1.5rem;
+                                margin-top: 1rem;
+                                margin-bottom: 1rem;
+                            }
+                            .prose li {
+                                margin-bottom: 0.5rem;
+                            }
+                        </style>
                         {!! $post->content !!}
                     </div>
                 </div>
