@@ -17,7 +17,6 @@ class RealtorListingController extends Controller
     {
 //        dd(\Auth::user()->listings);
 
-
         $filters =
             [
                 'deleted' => request()->boolean('deleted'),

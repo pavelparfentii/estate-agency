@@ -26,6 +26,7 @@
                 <div class="text-lg font-medium">
 <!--                    <Link href="/listing">Main Page</Link>&nbsp;-->
                     <Link :href="route('listing.index')">Listing</Link>&nbsp;
+                    <Link :href="route('blog.index')" class="ml-4">Blog</Link>&nbsp;
                 </div>
                 <div></div>
                 <div class="text-xl text-indigo-600 dark:text-indigo-400 font-bold text-center">
